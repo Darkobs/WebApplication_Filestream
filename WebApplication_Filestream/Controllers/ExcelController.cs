@@ -14,11 +14,11 @@ namespace WebApplication_Filestream.Controllers
 
             using (var package = new ExcelPackage())
             {
-                var worksheet = package.Workbook.Worksheets.Add("Datos");
+                var worksheet = package.Workbook.Worksheets.Add("Data");
                 worksheet.Cells[1, 1].Value = "ID";  
-                worksheet.Cells[1, 2].Value = "Nombre";
+                worksheet.Cells[1, 2].Value = "Name";
                 worksheet.Cells[2, 1].Value = 1;
-                worksheet.Cells[2, 2].Value = "Ejemplo";
+                worksheet.Cells[2, 2].Value = "Example";
 
                 // We can add more data here if needed 
 
@@ -29,7 +29,7 @@ namespace WebApplication_Filestream.Controllers
                 return File(
                     stream,
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    "ejemplo_streaming.xlsx"
+                    "streamingfile.xlsx"
                 );
             }
         }
