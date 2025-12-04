@@ -16,12 +16,10 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "*GitHub Action build result*: ${{ job.status }}\n
-                    ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n
-                    Hellow world"
-           
+            text: ""
             blocks:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n
+                        Hello World"
