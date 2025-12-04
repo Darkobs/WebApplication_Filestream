@@ -21,11 +21,11 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Repository: ${{ toJSON(github.event.repository.full_name) }}"
+                  text: "Repository: ${{ github.event.repository.full_name }}"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "PR Author: ${{ toJSON(github.event.pull_request.user.login) }}"
+                  text: "PR Author: ${{ github.event.pull_request.user.login }}"
               - type: "section"
                 text:
                   type: "mrkdwn"
