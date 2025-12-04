@@ -1,0 +1,22 @@
+name: "Slack Notification - Pull request is opened"
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+    branches: [main]
+
+jobs: 
+  send_slack:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 💬 Send Message to Slack 🚀
+        uses: archive/github-actions-slack@v2.10.1
+        with:
+          # For a simple message, you only need the payload with 'text'
+          payload: '{"text": "GitHub Actions workflow *${{ github.workflow }}* ran successfully!"}'
+        env:
+          # Reference the secret you created in GitHub
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      
+  
