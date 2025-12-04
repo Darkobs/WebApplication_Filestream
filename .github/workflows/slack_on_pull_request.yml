@@ -21,8 +21,4 @@ jobs:
               - type: "section"
                 text: "Pull Request Details"
                   type: "mrkdwn"
-                  text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n
-                        Repository: ${{ toJSON(github.event.repository.full_name) }}\n
-                        PR Author: ${{ toJSON(github.event.pull_request.user.login) }}\n
-                        PR Title: ${{ github.event.pull_request.title }}\n
-                        PR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\nRepository: ${{ toJSON(github.event.repository.full_name) }}\n"
