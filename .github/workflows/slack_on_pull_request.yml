@@ -16,12 +16,21 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: ""
+            text: "PR Details"
             blocks:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Repository: ${{ toJSON(github.event.repository.full_name) }}\n
-                        PR Author: ${{ toJSON(github.event.pull_request.user.login) }}\n
-                        PR Title: ${{ github.event.pull_request.title }}\n
-                        PR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  text: "Repository: ${{ toJSON(github.event.repository.full_name) }}"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "PR Author: ${{ toJSON(github.event.pull_request.user.login) }}"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "PR Title: ${{ github.event.pull_request.title }}"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "PR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
