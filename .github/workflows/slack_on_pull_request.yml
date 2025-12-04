@@ -21,7 +21,7 @@ jobs:
              - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "************************************\nPull Request opened"
+                  text: "Pull Request opened"
               - type: "section"
                 text:
                   type: "mrkdwn"
