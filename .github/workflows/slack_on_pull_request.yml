@@ -25,4 +25,4 @@ jobs:
              - type: "section"
                text:
                   type: "mrkdwn"
-                  text: "Repository: ${{ github.event.repository.full_name }}\nPR Author: ${{ github.event.pull_request.user.login }}\nPR Title: ${{ github.event.pull_request.title }}\nPR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  text: "Repository: ${{ github.event.repository.full_name }}\nPR Author: ${{ github.event.pull_request.user.login }}\nPR Title: ${{ github.event.pull_request.title }}\nPR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\nPR Branch: ${{ github.event.pull_request.ref_name }}"
