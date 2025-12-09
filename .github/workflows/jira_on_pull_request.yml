@@ -1,4 +1,4 @@
-name: "Jira Transitions on PR Events"
+name: "Jira Transitions - Pull Request is ready for review."
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 jobs: 
-  send_slack:
+  send_jira:
     runs-on: ubuntu-latest
 
     steps:
