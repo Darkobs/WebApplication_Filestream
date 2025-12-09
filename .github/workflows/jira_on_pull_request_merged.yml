@@ -1,0 +1,52 @@
+name: "Jira Transitions - Pull Request is merged."
+
+on:
+  pull_request:
+    types: [merged]
+    branches: [main]
+
+jobs: 
+  send_jira:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract Jira issue key from PR
+        id: key
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          BODY="${{ github.event.pull_request.body }}"
+          KEY=$(printf "%s\n%s\n%s" "$TITLE" "$BRANCH" "$BODY" | grep -oE '[A-Z][A-Z0-9]+-[0-9]+' | head -n1)
+          echo "key=$KEY" >> $GITHUB_OUTPUT
+          echo "The jira key is: $KEY"
+
+      - name: Get available transitions
+        if: steps.key.outputs.key != ''
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        run: |
+          curl -s -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+            -H "Accept: application/json" \
+            "$JIRA_BASE_URL/rest/api/3/issue/${{ steps.key.outputs.key }}/transitions" > transitions.json
+          cat transitions.json
+
+      - name: Transition to "Ready For QA" (find transition id by name)
+        if: steps.key.outputs.key != ''
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        run: |
+          ID=$(jq -r '.transitions[] | select(.name=="Ready For QA") | .id' transitions.json)
+          if [ -n "$ID" ]; then
+            curl -s -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              -X POST \
+              --data "{\"transition\": {\"id\": \"$ID\"}}" \
+              "$JIRA_BASE_URL/rest/api/3/issue/${{ steps.key.outputs.key }}/transitions"
+          else
+            echo "Transition 'Ready For QA' not found. Check your Jira workflow."
+            exit 1
+          fi
