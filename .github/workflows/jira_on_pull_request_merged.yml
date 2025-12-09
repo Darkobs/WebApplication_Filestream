@@ -2,11 +2,12 @@ name: "Jira Transitions - Pull Request is merged."
 
 on:
   pull_request:
-    types: [merged]
+    types: [closed]
     branches: [main]
 
 jobs: 
   send_jira:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
