@@ -18,4 +18,4 @@ jobs:
           BODY="${{ github.event.pull_request.body }}"
           KEY=$(printf "%s\n%s\n%s" "$TITLE" "$BRANCH" "$BODY" | grep -oE '[A-Z][A-Z0-9]+-[0-9]+' | head -n1)
           echo "key=$KEY" >> $GITHUB_OUTPUT
-          echo "The repository name is: $GITHUB_OUTPUT
+          echo "The repository name is: $GITHUB_OUTPUT"
