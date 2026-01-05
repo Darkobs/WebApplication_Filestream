@@ -16,13 +16,15 @@ jobs:
         run: |
           AUTHOR="${{ github.event.pull_request.user.login }}"
           
-          if [ "$EVENT" = "opened" ]; then
+          if [ "${{ github.event.action }}" = "opened" ]; then
             HEADER="PR opened 🚀"
           else
             HEADER="PR Ready for Review 👀"
           fi
-
           
+          echo "HEADER=$HEADER" >> $GITHUB_OUTPUT
+          echo "AUTHOR=$AUTHOR" >> $GITHUB_OUTPUT
+
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -34,8 +36,8 @@ jobs:
              - type: "section"
                text:
                   type: "mrkdwn"
-                  text: "********************************\n__HEADER__"
+                  text: "********************************\n${{ steps.payload.outputs.HEADER }}"
              - type: "section"
                text:
                   type: "mrkdwn"
-                  text: "Repository: ${{ github.event.repository.full_name }}\nPR Author: ${{ github.event.pull_request.user.login }}\nPR Title: ${{ github.event.pull_request.title }}\nPR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\nPR Branch: ${{ github.head_ref }}"
+                  text: "Repository: ${{ github.event.repository.full_name }}\nPR Author: ${{ steps.payload.outputs.AUTHOR }}\nPR Title: ${{ github.event.pull_request.title }}\nPR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\nPR Branch: ${{ github.head_ref }}"
