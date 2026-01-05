@@ -10,6 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+
+      - name: Build Slack payload
+        id: payload
+        run: |
+          AUTHOR="${{ github.event.pull_request.user.login }}"
+          
+          if [ "$EVENT" = "opened" ]; then
+            HEADER="PR opened 🚀"
+          else
+            HEADER="PR Ready for Review 👀"
+          fi
+
+          
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -21,8 +34,8 @@ jobs:
              - type: "section"
                text:
                   type: "mrkdwn"
-                  text: "********************************\nPull Request opened"
+                  text: "********************************\n__HEADER__"
              - type: "section"
                text:
                   type: "mrkdwn"
-                  text: "Repository: ${{ github.event.repository.full_name }}\nPR Author: ${{ github.event.pull_request.user.login }}\nPR Title: ${{ github.event.pull_request.title }}\nPR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\nPR Branch: ${{ github.head_ref }}"
+                  text: "Repository: ${{ github.event.repository.full_name }}\nPR Author: __AUTHOR__ }}\nPR Title: ${{ github.event.pull_request.title }}\nPR Link: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\nPR Branch: ${{ github.head_ref }}"
