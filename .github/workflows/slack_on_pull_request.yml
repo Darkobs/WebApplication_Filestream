@@ -17,15 +17,15 @@ jobs:
           AUTHOR="${{ github.event.pull_request.user.login }}"
           echo "AUTHOR=$AUTHOR" >> $GITHUB_OUTPUT
           
-          EVENT="${{ github.event.action }}"
-          if [ "$EVENT" = "opened" ]; then
+          if [ "${{ github.event.action }}" = "opened" ]; then
             HEADER="PR opened 🚀"
           else
             HEADER="PR Ready for Review 👀"
           fi
-          echo "HEADER=$HEADER" >> $GITHUB_OUTPUT
-
           
+          echo "HEADER=$HEADER" >> $GITHUB_OUTPUT
+          echo "AUTHOR=$AUTHOR" >> $GITHUB_OUTPUT
+
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2.1.1
         with:
