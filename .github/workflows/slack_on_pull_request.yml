@@ -53,4 +53,4 @@ jobs:
              - type: "section"
                text:
                   type: "mrkdwn"
-                  text: "Repository: ${{ steps.payload.outputs.REPOSITORY }}\nPR Author: ${{ steps.payload.outputs.AUTHOR || ' - ' || steps.payload.outputs.EMAIL }}\nPR Title: ${{ steps.payload.outputs.TITLE }}\nPR Link: ${{ steps.payload.outputs.PR_URL || steps.payload.outputs.PR_COMMIT }}\nPR Branch: ${{ steps.payload.outputs.BRANCH }}"
+                  text: "Repository: ${{ steps.payload.outputs.REPOSITORY }}\nPR Author: ${{ steps.payload.outputs.AUTHOR || steps.payload.outputs.EMAIL }}\nPR Title: ${{ steps.payload.outputs.TITLE }}\nPR Link: ${{ steps.payload.outputs.PR_URL || steps.payload.outputs.PR_COMMIT }}\nPR Branch: ${{ steps.payload.outputs.BRANCH }}"
